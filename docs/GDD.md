@@ -54,13 +54,19 @@ gantt
     Submit Game                  : submit, 2024-03-14, 0d
     
     Section Audio
-    Title Theme                  : music_title, 2024-02-29, 1h
+    Menu Theme                  :active, music_title, 2024-02-29, 1d
 
     Section Art
     Menu Art                     : art_title, 2024-03-01, 2d
     Buttons                      : art_buttons, 2024-03-02, 2d
+    Font                         : art_font, 2024-03-01, 2d
+    Level One Tileset            : art_level_one, after art_font, 1d
+    Player                       : art_player, 2024-03-01, 3d
 
     Section Code
-
+    Movement                     : code_move, 2024-02-29, 2d
+    Shooting                     : code_shoot, after code_move, 1d
+    Enemies                      : code_enemy, after code_shoot, 2d
+    Bosses                       : code_boss, after code_shoot, 2d
 ```
 ### Extra Tasks
