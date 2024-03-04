@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://cf8233d4wx1t0"]
+
+[ext_resource type="Script" path="res://scripts/actors/player.gd" id="1_jblnx"]
+[ext_resource type="Texture2D" uid="uid://bmsnrjxyrj78x" path="res://assets/img/player_wip.png" id="1_n1rog"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bnc0u"]
+radius = 14.0
+height = 62.0
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 15
+platform_wall_layers = 1
+script = ExtResource("1_jblnx")
+
+[node name="PlayerWip" type="Sprite2D" parent="."]
+position = Vector2(0, -32)
+texture = ExtResource("1_n1rog")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -31)
+shape = SubResource("CapsuleShape2D_bnc0u")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+
+[node name="Firerate" type="Timer" parent="."]
+one_shot = true
+
+[node name="ShootSrc" type="Marker2D" parent="."]
+position = Vector2(0, -39)

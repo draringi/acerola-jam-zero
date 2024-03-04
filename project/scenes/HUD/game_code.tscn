@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbn0ji1wrdmfc"]
+
+[ext_resource type="Script" path="res://scripts/game_logic/game_code.gd" id="1_lsfsu"]
+
+[node name="GameCode" type="Node"]
+script = ExtResource("1_lsfsu")
