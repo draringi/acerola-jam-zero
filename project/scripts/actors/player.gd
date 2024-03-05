@@ -33,6 +33,8 @@ func _process(delta: float):
 		energy += energy_recovery_rate * delta
 		if energy > max_energy:
 			energy = max_energy
+	if Input.is_action_just_pressed("debug"):
+		print(global_position.x,", ", global_position.y)
 
 func _physics_process(delta: float):
 	velocity.y += delta * gravity
@@ -85,10 +87,23 @@ func can_shoot() -> bool:
 
 func shoot():
 	energy -= shoot_cost
-	var pos = $ShootSrc.global_position
+	var pos: Vector2 = $ShootSrc.global_position
 	var projectile := projectile_scene.instantiate()
 	projectile.position = pos
 	projectile.direction = pos.direction_to(get_global_mouse_position())
 	var game = get_node("../GameCode")
 	game.register_projectile(projectile)
 	firerate.start(shoot_period)
+
+func player_damage(damage: float):
+	print("Took Damage: ", damage)
+	health -= damage
+	if health <= 0:
+		print("game over")
+	health_changed.emit()
+
+func heal_damage(heal_amount: float):
+	health += heal_amount
+	if health > max_health:
+		health = max_health
+	health_changed.emit()
