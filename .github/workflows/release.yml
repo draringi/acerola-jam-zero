@@ -5,7 +5,8 @@ on:
 
 env:
   GODOT_VERSION: 4.2.1
-  EXPORT_NAME: gds
+  EXPORT_NAME: disturbance_within
+  PROJECT_PATH: project
 
 jobs:
   export-windows:
@@ -15,7 +16,7 @@ jobs:
       image: barichello/godot-ci:4.2.1
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           lfs: true
       - name: Setup
@@ -25,9 +26,11 @@ jobs:
       - name: Windows Build
         run: |
           mkdir -v -p build/windows
-          godot --headless --verbose --export-release "Windows Desktop" ../build/windows/$EXPORT_NAME.exe
+          cd $PROJECT_PATH
+          TAG=`git describe --tags`
+          godot --headless --verbose --export-release "Windows Desktop" ../build/windows/$EXPORT_NAME_$TAG.exe
       - name: Upload Artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: windows
           path: build/windows
@@ -39,7 +42,7 @@ jobs:
       image: barichello/godot-ci:4.2.1
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           lfs: true
       - name: Setup
@@ -49,9 +52,11 @@ jobs:
       - name: Linux Build
         run: |
           mkdir -v -p build/linux
-          godot --headless --verbose --export-release "Linux/X11" ../build/linux/$EXPORT_NAME.x86_64
+          cd $PROJECT_PATH
+          TAG=`git describe --tags`
+          godot --headless --verbose --export-release "Linux/X11" ../build/linux/$EXPORT_NAME_$TAG.x86_64
       - name: Upload Artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: linux
           path: build/linux
@@ -63,7 +68,7 @@ jobs:
       image: barichello/godot-ci:4.2.1
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           lfs: true
       - name: Setup
@@ -73,9 +78,11 @@ jobs:
       - name: Web Build
         run: |
           mkdir -v -p build/web
+          cd $PROJECT_PATH
+          TAG=`git describe --tags`
           godot --headless --verbose --export-release "HTML5" ../build/web/index.html
       - name: Upload Artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: web
           path: build/web
@@ -95,7 +102,7 @@ jobs:
       image: barichello/godot-ci:4.2.1
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           lfs: true
       - name: Setup
@@ -105,9 +112,11 @@ jobs:
       - name: Mac Build
         run: |
           mkdir -v -p build/mac
-          godot --headless --verbose --export-release "Mac OSX" ../build/mac/$EXPORT_NAME.zip
+          cd $PROJECT_PATH
+          TAG=`git describe --tags`
+          godot --headless --verbose --export-release "Mac OSX" ../build/mac/$EXPORT_NAME_$TAG.zip
       - name: Upload Artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: mac
           path: build/mac
