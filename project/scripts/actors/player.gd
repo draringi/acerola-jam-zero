@@ -3,6 +3,7 @@ extends CharacterBody2D
 class_name Player
 
 signal health_changed
+signal player_died
 
 @export var speed: float = 400
 @export var gravity: float = 980
@@ -15,6 +16,7 @@ signal health_changed
 @export var shoot_period: float = 0.5
 var shoot_cost: float = 2
 var air_accel: float = 1000
+@onready var shoot_src: Marker2D = $ShootSrc
 
 var camera: Camera2D
 var firerate: Timer
@@ -87,7 +89,7 @@ func can_shoot() -> bool:
 
 func shoot():
 	energy -= shoot_cost
-	var pos: Vector2 = $ShootSrc.global_position
+	var pos: Vector2 = shoot_src.global_position
 	var projectile := projectile_scene.instantiate()
 	projectile.position = pos
 	projectile.direction = pos.direction_to(get_global_mouse_position())
@@ -100,6 +102,8 @@ func player_damage(damage: float):
 	health -= damage
 	if health <= 0:
 		print("game over")
+		player_died.emit()
+		return
 	health_changed.emit()
 
 func heal_damage(heal_amount: float):

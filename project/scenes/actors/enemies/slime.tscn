@@ -12,12 +12,16 @@ script = ExtResource("1_72nuu")
 max_health = 2.0
 
 [node name="Slime" type="Sprite2D" parent="."]
-position = Vector2(0, -16)
+position = Vector2(0, -2)
 texture = ExtResource("2_p4nsw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -14)
 shape = SubResource("CapsuleShape2D_nxjb7")
 
 [node name="SleepTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="eyes" type="Marker2D" parent="."]
+position = Vector2(0, -9)

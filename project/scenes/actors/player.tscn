@@ -14,18 +14,18 @@ platform_wall_layers = 1
 script = ExtResource("1_jblnx")
 
 [node name="PlayerWip" type="Sprite2D" parent="."]
-position = Vector2(0, -32)
+position = Vector2(0, -1)
 texture = ExtResource("1_n1rog")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -31)
 shape = SubResource("CapsuleShape2D_bnc0u")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, 31)
 position_smoothing_enabled = true
 
 [node name="Firerate" type="Timer" parent="."]
 one_shot = true
 
 [node name="ShootSrc" type="Marker2D" parent="."]
-position = Vector2(0, -39)
+position = Vector2(0, -8)

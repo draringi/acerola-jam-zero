@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://5g1dbx5prx4y"]
+
+[ext_resource type="Texture2D" uid="uid://i6pkpkc8doys" path="res://assets/img/soldier.png" id="1_chttj"]
+[ext_resource type="Script" path="res://scripts/actors/soldier.gd" id="1_xw7he"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t8ke5"]
+size = Vector2(23, 61)
+
+[node name="Soldier" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 11
+script = ExtResource("1_xw7he")
+
+[node name="Soldier" type="Sprite2D" parent="."]
+position = Vector2(0, -1)
+texture = ExtResource("1_chttj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_t8ke5")
+
+[node name="ShootSrc" type="Marker2D" parent="."]
+position = Vector2(0, -14)
+
+[node name="Firerate" type="Timer" parent="."]
+one_shot = true
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+debug_enabled = true
+debug_path_custom_color = Color(0.0627451, 0.301961, 0.356863, 1)
+debug_path_custom_point_size = 9.71
+debug_path_custom_line_width = 9.69
+
+[node name="PathTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="eyes" type="Marker2D" parent="."]
+position = Vector2(0, -24)
