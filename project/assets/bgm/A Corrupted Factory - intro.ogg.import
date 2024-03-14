@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bg0bju6x1i32b"
+path="res://.godot/imported/A Corrupted Factory - intro.ogg-6691d77956699f87520a4da64c4799ab.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/bgm/A Corrupted Factory - intro.ogg"
+dest_files=["res://.godot/imported/A Corrupted Factory - intro.ogg-6691d77956699f87520a4da64c4799ab.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

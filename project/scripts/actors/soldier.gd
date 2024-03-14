@@ -6,7 +6,9 @@ var shoot_period: float = 0.6
 var projectile_scene: PackedScene = preload("res://scenes/actors/attacks/solder_shot.tscn")
 @onready var ShootSource = $ShootSrc
 @onready var recheckPath: Timer = $PathTimer
-var last_seen: Vector2
+var last_seen: Vector2 = Vector2.INF
+var close_enough: float = 40*40+20
+@onready var shoot_sound: AudioStreamPlayer2D = $ShotSound
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -16,30 +18,43 @@ func _ready():
 	health = 5
 	speed = 200
 	air_accel = 100
-	sight = 400*400
+	set_sight(500)
 	navigation_agent.path_desired_distance = 4.0
 	navigation_agent.target_desired_distance = 40.0
 	chase = false
 	configure_agent()
 
+func vector_string(v :Vector2) -> String:
+	return "%f, %f" % [v.x, v.y]
+
 func _process(_delta):
 	var aim_vector = player_sight_line()
-	if aim_vector != Vector2.INF and aim_vector.length_squared() >= shoot_range/2:
-		chase = true
-		if recheckPath.is_stopped():
-			navigation_agent.target_position = target.global_position
-			recheckPath.start(1)
-	elif aim_vector != Vector2.INF:
-		chase = true
+	if aim_vector != Vector2.INF:
+		last_seen = target.global_position
+		chase = aim_vector.length_squared() >= shoot_range/2
+	if last_seen != Vector2.INF:
+		if recheckPath.is_stopped() and last_seen != navigation_agent.target_position:
+			navigation_agent.set_target_position(last_seen)
+			recheckPath.start(0.5)
+		if aim_vector == Vector2.INF:
+			chase = true
 	else:
 		chase = false
 	if can_shoot(aim_vector):
 		shoot(aim_vector)
+	if Input.is_action_just_pressed("debug"):
+		print(name)
+		print("aim: ", vector_string(aim_vector))
+		print("current: ", vector_string(global_position))
+		print("next: ", vector_string(navigation_agent.get_next_path_position()))
+		print("last seen: ", vector_string(last_seen))
+		print("target?: ", vector_string(navigation_agent.target_position))
 
 func can_shoot(aim_vector: Vector2) -> bool:
 	return firerate.is_stopped() and aim_vector.length_squared() <= shoot_range
 
 func shoot(aim_vector: Vector2):
+	shoot_sound.play()
 	var pos: Vector2 = ShootSource.global_position
 	var projectile := projectile_scene.instantiate()
 	projectile.position = pos
@@ -58,12 +73,15 @@ func should_jump() -> bool:
 	return false
 
 func get_desired_direction():
+	if last_seen != Vector2.INF:
+		var dist = global_position.distance_squared_to(last_seen)
+		if dist <= close_enough:
+			last_seen = Vector2.INF
 	if navigation_agent.is_navigation_finished():
 		return MoveDirection.STOP
 	if chase:
 		var next_waypoint = navigation_agent.get_next_path_position()
 		var dir = global_position.direction_to(next_waypoint)
-		print("Target is in direction", dir.x," and ", dir.y)
 		if dir.x > 0:
 			return MoveDirection.RIGHT
 		if dir.x < 0:

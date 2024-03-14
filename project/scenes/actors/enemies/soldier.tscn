@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://5g1dbx5prx4y"]
+[gd_scene load_steps=5 format=3 uid="uid://5g1dbx5prx4y"]
 
 [ext_resource type="Texture2D" uid="uid://i6pkpkc8doys" path="res://assets/img/soldier.png" id="1_chttj"]
 [ext_resource type="Script" path="res://scripts/actors/soldier.gd" id="1_xw7he"]
+[ext_resource type="AudioStream" uid="uid://ccws2orgj1esf" path="res://assets/sfx/shot.wav" id="3_o1kvh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t8ke5"]
 size = Vector2(23, 61)
@@ -26,7 +27,6 @@ position = Vector2(0, -14)
 one_shot = true
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-debug_enabled = true
 debug_path_custom_color = Color(0.0627451, 0.301961, 0.356863, 1)
 debug_path_custom_point_size = 9.71
 debug_path_custom_line_width = 9.69
@@ -36,3 +36,10 @@ one_shot = true
 
 [node name="eyes" type="Marker2D" parent="."]
 position = Vector2(0, -24)
+
+[node name="ShotSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_o1kvh")
+volume_db = -3.748
+pitch_scale = 0.64
+max_polyphony = 8
+bus = &"SFX"

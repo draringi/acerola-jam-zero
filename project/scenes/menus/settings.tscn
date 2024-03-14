@@ -1,0 +1,102 @@
+[gd_scene load_steps=3 format=3 uid="uid://sn4qotlcviu7"]
+
+[ext_resource type="Theme" uid="uid://b3obd08f7jxct" path="res://assets/misc/base_theme.tres" id="1_wuo5e"]
+[ext_resource type="Script" path="res://scripts/menus/settings.gd" id="2_5aqup"]
+
+[node name="Settings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -431.0
+offset_bottom = -296.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_wuo5e")
+script = ExtResource("2_5aqup")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 659.0
+offset_bottom = 318.0
+
+[node name="Label" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+text = "Audio
+"
+fit_content = true
+
+[node name="Volume_label_1" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 24
+text = "Volume
+"
+fit_content = true
+
+[node name="Volume_label_2" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 16
+text = "Main Volume
+"
+fit_content = true
+
+[node name="MasterVolumeSlider" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Master Volume"
+max_value = 1.0
+step = 0.05
+
+[node name="Volume_label_3" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 16
+text = "Music Volume
+"
+fit_content = true
+
+[node name="MusicVolumeSlider" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Music Volume"
+max_value = 1.0
+step = 0.05
+
+[node name="Volume_label_4" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 16
+text = "SFX Volume
+"
+fit_content = true
+
+[node name="SFXVolumeSlider" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+tooltip_text = "SFX Volume"
+max_value = 1.0
+step = 0.05
+
+[node name="Volume_label_5" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 16
+text = "Voices Volume
+"
+fit_content = true
+
+[node name="VoicesVolumeSlider" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Voices Volume"
+max_value = 1.0
+step = 0.05
+
+[node name="Volume_label_6" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 24
+text = "Output Device"
+fit_content = true
+
+[node name="OutputDeviceSelector" type="MenuButton" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Select Output Device"
+
+[connection signal="value_changed" from="VBoxContainer/MasterVolumeSlider" to="." method="setMasterVolume"]
+[connection signal="value_changed" from="VBoxContainer/MusicVolumeSlider" to="." method="setMusicVolume"]
+[connection signal="value_changed" from="VBoxContainer/SFXVolumeSlider" to="." method="setSFXVolume"]
+[connection signal="value_changed" from="VBoxContainer/VoicesVolumeSlider" to="." method="setVoicesVolume"]

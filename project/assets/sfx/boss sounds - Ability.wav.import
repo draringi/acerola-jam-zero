@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ctdj87pga7lte"
+path="res://.godot/imported/boss sounds - Ability.wav-2de72ab7f0f25e6a8ebae5b813b3d5e3.sample"
+
+[deps]
+
+source_file="res://assets/sfx/boss sounds - Ability.wav"
+dest_files=["res://.godot/imported/boss sounds - Ability.wav-2de72ab7f0f25e6a8ebae5b813b3d5e3.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

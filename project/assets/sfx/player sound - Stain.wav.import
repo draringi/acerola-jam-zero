@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ca2pyvy3nu330"
+path="res://.godot/imported/player sound - Stain.wav-c27f263fd479c4035338651ea14fa1c8.sample"
+
+[deps]
+
+source_file="res://assets/sfx/player sound - Stain.wav"
+dest_files=["res://.godot/imported/player sound - Stain.wav-c27f263fd479c4035338651ea14fa1c8.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

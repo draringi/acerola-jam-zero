@@ -1,9 +1,73 @@
-[gd_scene format=3 uid="uid://egbbabptax2f"]
+[gd_scene load_steps=5 format=3 uid="uid://egbbabptax2f"]
+
+[ext_resource type="Theme" uid="uid://b3obd08f7jxct" path="res://assets/misc/base_theme.tres" id="1_mxisj"]
+[ext_resource type="Script" path="res://scripts/menus/MainMenu.gd" id="2_gknnm"]
+[ext_resource type="Texture2D" uid="uid://bpves4d3bqdkk" path="res://assets/img/main_menu_bg.png" id="3_8qins"]
+[ext_resource type="PackedScene" uid="uid://sn4qotlcviu7" path="res://scenes/menus/settings.tscn" id="4_g5t78"]
 
 [node name="MainMenu" type="Control"]
+texture_filter = 3
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_mxisj")
+script = ExtResource("2_gknnm")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 174.0
+offset_top = 117.0
+offset_right = 492.0
+offset_bottom = 268.0
+
+[node name="PlayButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../SettingsButton")
+text = "Play"
+
+[node name="SettingsButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../PlayButton")
+focus_neighbor_bottom = NodePath("../QuitButton")
+text = "Settings"
+
+[node name="QuitButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../SettingsButton")
+text = "Quit"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = -532.0
+offset_top = -313.0
+offset_right = 559.0
+offset_bottom = -47.0
+theme_override_font_sizes/normal_font_size = 96
+text = "Disturbance Within"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
+texture_filter = 3
+scale = Vector2(10, 10)
+texture = ExtResource("3_8qins")
+
+[node name="Settings" parent="." instance=ExtResource("4_g5t78")]
+modulate = Color(0.72549, 0.65098, 0.643137, 1)
+z_index = 1
+layout_mode = 1
+offset_left = -553.0
+offset_top = -31.0
+offset_right = -553.0
+offset_bottom = -31.0
+
+[connection signal="mouse_entered" from="VBoxContainer/PlayButton" to="." method="_button_hover"]
+[connection signal="pressed" from="VBoxContainer/PlayButton" to="." method="_play_button_press"]
+[connection signal="mouse_entered" from="VBoxContainer/SettingsButton" to="." method="_button_hover"]
+[connection signal="pressed" from="VBoxContainer/SettingsButton" to="." method="_settings_button_press"]
+[connection signal="mouse_entered" from="VBoxContainer/QuitButton" to="." method="_button_hover"]
+[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_quit_button_press"]

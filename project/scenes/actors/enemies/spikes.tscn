@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://4m60xawmbf40"]
+
+[ext_resource type="Texture2D" uid="uid://dxvah4r06v00g" path="res://assets/img/spikes.png" id="1_oygvg"]
+[ext_resource type="Script" path="res://scripts/actors/objects/spikes.gd" id="1_x77lg"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ubaln"]
+radius = 8.0
+height = 32.0
+
+[node name="Spikes" type="Area2D"]
+collision_mask = 14
+script = ExtResource("1_x77lg")
+
+[node name="Spikes" type="Sprite2D" parent="."]
+texture_filter = 3
+texture = ExtResource("1_oygvg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 8)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_ubaln")
+
+[connection signal="body_entered" from="." to="." method="_handle_collide"]

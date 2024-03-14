@@ -1,6 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://yo58aplkc4uk"]
+[gd_scene load_steps=8 format=3 uid="uid://yo58aplkc4uk"]
 
 [ext_resource type="Script" path="res://scripts/game_logic/hud.gd" id="1_ml1kq"]
+[ext_resource type="Texture2D" uid="uid://dajllnr5xxbd6" path="res://assets/img/hud-background.png" id="2_mh8fg"]
+[ext_resource type="FontFile" uid="uid://b43wjioccipnx" path="res://assets/img/scuff_font.png" id="2_oua7s"]
+
+[sub_resource type="Theme" id="Theme_sff4h"]
+default_font = ExtResource("2_oua7s")
+
+[sub_resource type="Theme" id="Theme_57ipu"]
+default_font = ExtResource("2_oua7s")
+
+[sub_resource type="Theme" id="Theme_hepc0"]
+default_font = ExtResource("2_oua7s")
+
+[sub_resource type="Theme" id="Theme_4fgk3"]
+default_font = ExtResource("2_oua7s")
 
 [node name="Hud" type="Control"]
 layout_mode = 3
@@ -13,14 +27,38 @@ script = ExtResource("1_ml1kq")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="Hud-background" type="Sprite2D" parent="CanvasLayer"]
+texture_filter = 3
+position = Vector2(260, 101)
+scale = Vector2(8.13281, 8.41667)
+texture = ExtResource("2_mh8fg")
+
+[node name="HealthText" type="RichTextLabel" parent="CanvasLayer"]
+offset_left = 4.0
+offset_top = 8.0
+offset_right = 109.0
+offset_bottom = 33.0
+theme = SubResource("Theme_sff4h")
+text = "Health"
+
+[node name="EnergyText" type="RichTextLabel" parent="CanvasLayer"]
+offset_left = 5.0
+offset_top = 52.0
+offset_right = 122.0
+offset_bottom = 77.0
+theme = SubResource("Theme_57ipu")
+text = "Energy"
+
 [node name="HealthBar" type="ProgressBar" parent="CanvasLayer"]
-offset_left = 61.0
-offset_top = 1.0
-offset_right = 141.0
-offset_bottom = 28.0
+offset_left = 111.0
+offset_top = 3.0
+offset_right = 322.0
+offset_bottom = 30.0
+theme = SubResource("Theme_hepc0")
 
 [node name="EnergyBar" type="ProgressBar" parent="CanvasLayer"]
-offset_left = 61.0
-offset_top = 31.0
-offset_right = 142.0
-offset_bottom = 61.0
+offset_left = 112.0
+offset_top = 48.0
+offset_right = 322.0
+offset_bottom = 78.0
+theme = SubResource("Theme_4fgk3")

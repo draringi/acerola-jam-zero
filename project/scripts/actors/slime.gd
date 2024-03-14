@@ -2,6 +2,7 @@ extends BaseEnemy
 
 var melee_damage: float = 1
 @onready var sleep_timer: Timer= $SleepTimer
+@onready var jump_sound: AudioStreamPlayer2D = $JumpSound
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -11,16 +12,19 @@ func _ready():
 	health = 2
 	speed = 100
 	air_accel = 100
-	sight = 400*400
+	set_sight(1000)
 	chase = false
 	configure_agent()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	if sleep_timer.is_stopped() and can_see(target):
+	if sleep_timer.is_stopped() and can_see_player:
 		chase = true
 	else:
 		chase = false
+
+func jump_fx():
+	jump_sound.play()
 
 func death():
 	queue_free()

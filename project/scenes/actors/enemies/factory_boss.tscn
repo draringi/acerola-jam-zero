@@ -1,12 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://c3li6huqhvoqb"]
+[gd_scene load_steps=6 format=3 uid="uid://c3li6huqhvoqb"]
 
 [ext_resource type="Texture2D" uid="uid://cnw3iabq1wfrt" path="res://assets/img/factory_boss.png" id="1_1dy86"]
 [ext_resource type="Script" path="res://scripts/actors/factory_boss.gd" id="1_rdaht"]
+[ext_resource type="AudioStream" uid="uid://ctdj87pga7lte" path="res://assets/sfx/boss sounds - Ability.wav" id="3_m0esy"]
+[ext_resource type="AudioStream" uid="uid://3stwh8758fuv" path="res://assets/sfx/boss sounds - Death.wav" id="4_r1chj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o7q6i"]
 size = Vector2(118, 126)
 
 [node name="FactoryBoss" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 11
 script = ExtResource("1_rdaht")
 
 [node name="FactoryBoss" type="Sprite2D" parent="."]
@@ -14,9 +18,33 @@ position = Vector2(0, -64)
 texture = ExtResource("1_1dy86")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+texture_filter = 3
 position = Vector2(0, -63)
 shape = SubResource("RectangleShape2D_o7q6i")
 
 [node name="AbilityCooldown" type="Timer" parent="."]
+wait_time = 8.0
+one_shot = true
 
 [node name="AbilityDuration" type="Timer" parent="."]
+one_shot = true
+
+[node name="FleeTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="Eyes" type="Marker2D" parent="."]
+position = Vector2(0, -105)
+
+[node name="AbilitySound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_m0esy")
+bus = &"SFX"
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_r1chj")
+bus = &"SFX"
+
+[connection signal="timeout" from="AbilityCooldown" to="." method="use_ability"]
+[connection signal="timeout" from="AbilityDuration" to="." method="end_ability"]
+[connection signal="timeout" from="FleeTimer" to="." method="end_flee"]

@@ -17,6 +17,17 @@ signal player_died
 var shoot_cost: float = 2
 var air_accel: float = 1000
 @onready var shoot_src: Marker2D = $ShootSrc
+@onready var head: Marker2D = $head
+@onready var feet: Marker2D = $feet
+@onready var shoot_sound: AudioStreamPlayer2D = $ShotSound
+@onready var grunt_1: AudioStreamPlayer2D = $grunt1
+@onready var grunt_2: AudioStreamPlayer2D = $grunt2
+@onready var voice_line_1: AudioStreamPlayer2D = $VoiceLine1
+@onready var voice_line_2: AudioStreamPlayer2D = $VoiceLine2
+@onready var voice_line_3: AudioStreamPlayer2D = $VoiceLine3
+@onready var voice_line_heal: AudioStreamPlayer2D = $VoiceLineHeal
+var last_voice_line: int = 0
+var last_grunt: int = 0
 
 var camera: Camera2D
 var firerate: Timer
@@ -87,11 +98,18 @@ func can_shoot() -> bool:
 		return false
 	return firerate.is_stopped()
 
+func death():
+	health = 0
+	print("game over")
+	player_died.emit()
+	health_changed.emit()
+
 func shoot():
 	energy -= shoot_cost
 	var pos: Vector2 = shoot_src.global_position
 	var projectile := projectile_scene.instantiate()
 	projectile.position = pos
+	shoot_sound.play()
 	projectile.direction = pos.direction_to(get_global_mouse_position())
 	var game = get_node("../GameCode")
 	game.register_projectile(projectile)
@@ -99,10 +117,24 @@ func shoot():
 
 func player_damage(damage: float):
 	print("Took Damage: ", damage)
+	if last_grunt >= 1:
+		grunt_2.play()
+		last_grunt = 0
+	else:
+		grunt_1.play()
+		last_grunt += 1
+	if last_voice_line == 0 and health <= 15:
+		voice_line_1.play()
+		last_voice_line += 1
+	elif last_voice_line == 1 and health <= 10:
+		voice_line_2.play()
+		last_voice_line += 1
+	elif last_voice_line == 2 and health <= 5:
+		voice_line_3.play()
+		last_voice_line += 1
 	health -= damage
 	if health <= 0:
-		print("game over")
-		player_died.emit()
+		death()
 		return
 	health_changed.emit()
 
@@ -110,4 +142,5 @@ func heal_damage(heal_amount: float):
 	health += heal_amount
 	if health > max_health:
 		health = max_health
+	voice_line_heal.play()
 	health_changed.emit()

@@ -1,0 +1,172 @@
+[gd_scene load_steps=9 format=3 uid="uid://bb2gqwbmamaj7"]
+
+[ext_resource type="Script" path="res://scripts/globals/sound.gd" id="1_ohfr5"]
+[ext_resource type="Script" path="res://scripts/globals/SFX.gd" id="2_qyajp"]
+[ext_resource type="AudioStream" uid="uid://0jpm7s3k7xg8" path="res://assets/sfx/ButtonPress.wav" id="3_q1j0c"]
+[ext_resource type="AudioStream" uid="uid://oaaydggbhk68" path="res://assets/sfx/ButtonHover.wav" id="4_dxi25"]
+
+[sub_resource type="Animation" id="Animation_falmx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BGM_2:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BGM_1:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-80.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BGM_2:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("BGM_1:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_bw066"]
+resource_name = "fade_to_1"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BGM_2:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(9.18959, 4.43828),
+"update": 0,
+"values": [0.0, -80.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BGM_1:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.225313, 2.37841),
+"update": 0,
+"values": [-80.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BGM_2:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_1nr25"]
+resource_name = "fade_to_2"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BGM_2:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.042689, 0.0426886),
+"update": 0,
+"values": [-80.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BGM_1:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(9.18958, 3.605),
+"update": 0,
+"values": [0.0, -80.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BGM_1:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_g16qh"]
+_data = {
+"RESET": SubResource("Animation_falmx"),
+"fade_to_1": SubResource("Animation_bw066"),
+"fade_to_2": SubResource("Animation_1nr25")
+}
+
+[node name="Sound" type="Node"]
+process_mode = 3
+script = ExtResource("1_ohfr5")
+
+[node name="BGM_1" type="AudioStreamPlayer" parent="."]
+volume_db = -80.0
+bus = &"Music"
+
+[node name="BGM_2" type="AudioStreamPlayer" parent="."]
+bus = &"Music"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_g16qh")
+}
+
+[node name="SFX" type="Node" parent="."]
+script = ExtResource("2_qyajp")
+
+[node name="StreamButtonPush" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("3_q1j0c")
+max_polyphony = 8
+bus = &"SFX"
+
+[node name="StreamButtonHover" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("4_dxi25")
+volume_db = -10.306
+max_polyphony = 8
+bus = &"SFX"

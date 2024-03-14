@@ -1,0 +1,92 @@
+[gd_scene load_steps=3 format=3 uid="uid://bam4d4m8j6m2v"]
+
+[ext_resource type="Script" path="res://scripts/menus/Victory.gd" id="1_u3frd"]
+[ext_resource type="Theme" uid="uid://b3obd08f7jxct" path="res://assets/misc/base_theme.tres" id="1_wtv58"]
+
+[node name="Victory" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_u3frd")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -323.0
+offset_right = 576.0
+offset_bottom = 323.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_wtv58")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_top = -191.0
+offset_right = 121.0
+offset_bottom = -88.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ReplayButton" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+text = "Replay"
+
+[node name="MenuButton" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+text = "Main Menu
+"
+
+[node name="Victory" type="RichTextLabel" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -297.0
+offset_top = 125.0
+offset_right = 307.0
+offset_bottom = 216.0
+grow_horizontal = 2
+theme_override_font_sizes/normal_font_size = 72
+text = "Victory!
+"
+
+[node name="TimeTaken" type="RichTextLabel" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -304.0
+offset_top = 280.0
+offset_right = 300.0
+offset_bottom = 394.0
+grow_horizontal = 2
+text = "You completed the factory level in
+xx seconds"
+
+[node name="CanvasModulate" type="CanvasModulate" parent="CanvasLayer/Control"]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.317647, 0.317647, 0.317647, 0.827451)
+
+[connection signal="focus_entered" from="CanvasLayer/Control/VBoxContainer/ReplayButton" to="." method="_button_hover"]
+[connection signal="mouse_entered" from="CanvasLayer/Control/VBoxContainer/ReplayButton" to="." method="_button_hover"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/ReplayButton" to="." method="_restart_button_press"]
+[connection signal="focus_entered" from="CanvasLayer/Control/VBoxContainer/MenuButton" to="." method="_button_hover"]
+[connection signal="mouse_entered" from="CanvasLayer/Control/VBoxContainer/MenuButton" to="." method="_button_hover"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/MenuButton" to="." method="_menu_button_press"]

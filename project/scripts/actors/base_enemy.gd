@@ -10,7 +10,8 @@ var target :Player
 var chase: bool
 var chase_timer: Timer
 var eyes: Node2D
-@export var sight: float
+var sight: float
+var sight_sq: float
 @export var speed: float
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
 enum MoveDirection {LEFT, RIGHT, STOP}
@@ -19,18 +20,19 @@ var can_see_player: bool = false
 func _ready():
 	pass
 
+func set_sight(s:float):
+	sight = s
+	sight_sq = s*s
+
 func can_see(item: Player) -> bool:
 	if eyes == null:
 		return false
-	var space_state = get_world_2d().direct_space_state
-	var positions = [item.global_position, item.shoot_src.global_position]
+	var positions = [item.global_position, item.feet.global_position, item.head.global_position]
 	for loc in positions:
-		var target_direction: Vector2 = (loc - eyes.global_position).normalized() * sight
-		var query = PhysicsRayQueryParameters2D.create(eyes.global_position, target_direction, collision_mask, [self])
-		var result := space_state.intersect_ray(query)
-		if result != null and result.has("collider"):
-			if result.collider == item:
-				return true
+		var target_vector: Vector2 = loc - eyes.global_position
+		if target_vector.length_squared() > sight_sq:
+			continue
+		return true
 	return false
 
 func player_sight_line() -> Vector2:
@@ -45,7 +47,7 @@ func take_damage(damage: float):
 		death()
 
 func death():
-	pass
+	queue_free()
 	
 func ai_move(delta: float, direction: MoveDirection, jump: bool):
 	velocity.y += delta * gravity
@@ -53,9 +55,11 @@ func ai_move(delta: float, direction: MoveDirection, jump: bool):
 	if jump:
 		if is_on_floor():
 			velocity.y = jump_speed
+			jump_fx()
 		elif is_on_wall_only():
 			velocity.x = get_wall_normal().x * speed
 			velocity.y = jump_speed/2
+			jump_fx()
 	
 	if is_on_floor():
 		if direction == MoveDirection.RIGHT:
@@ -84,6 +88,9 @@ func ai_move(delta: float, direction: MoveDirection, jump: bool):
 	return velocity
 
 func _handle_collide(_object):
+	pass
+
+func jump_fx():
 	pass
 
 func should_jump() -> bool:
