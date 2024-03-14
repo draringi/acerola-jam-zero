@@ -1,6 +1,7 @@
 # Godot 4+ specific ignores
 .godot/
 *.tmp
+/project/export
 
 # Godot-specific ignores
 .import/
